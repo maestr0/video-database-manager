@@ -201,7 +201,7 @@ var fnSaveMediaToLocalStorage = function(media_id, data) {
 		console.log("Saving media to LocalStorage...", media_id, data);
 		chrome.storage.sync.set({ media_id : data },function() {
 			// Notify that we saved.
-			message('Media metadata saved');
+			console.log('Media metadata saved');
 		});
 	};
 
@@ -209,10 +209,9 @@ var fnAddMediaToUI = function(media) {
         console.log("Adding media to UI...", media);
     };
 
-var fnFindMediaInfo = function(mediaFile) {
-        // TODO: extract title and year from a file name
-        var title = "Gladiator";
-        var year = "";
+var fnFindMediaInfo = function(mediaFile) {      
+        var title = filenameToTitle(mediaFile.filename);
+        var year = filenameToYear(mediaFile.filename);
 
         var url = 'http://www.imdbapi.com/?t=' + title + "&y=" + year;
         fnCallAPI(url);
@@ -228,5 +227,19 @@ var fnCallAPI = function(url) {
             }
         });
     };
+
+var filenameToYear = function(filename) {
+    year = filename.match(/\d{4}/);
+    return year;
+};
+
+var filenameToTitle = function(filename) {
+    filename = filename.replace(/(\[|\(|dvd|brrip|bdrip|tvrip|r5).*/i, '')
+            .replace(/\d{4}/i,'').replace(/[\.\s]/g, '+');
+    return filename;
+};
+
+
+
 
 fnStartApp();
