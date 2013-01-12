@@ -8,7 +8,7 @@ var fnStartApp = function() {
 	};
 
 
-var fnLoadMoviesFromLocalStorage = function() {
+var fnLoadMediaFromLocalStorage = function() {
 
 	};
 
