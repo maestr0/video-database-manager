@@ -13,6 +13,8 @@
     }
   },
   "permissions": [
-    "storage"
+    "storage",
+    {"mediaGalleries": ["read", "allAutoDetected"]},
+    "fileSystem"
   ]
 }
