@@ -1,16 +1,127 @@
+var gGalleryArray = [];    // holds information about all top-level Galleries found
+
 var self = this;
+
+var vidFormats = ['3gp', '3gpp', 'avi', 'flv', 'mov', 'mpeg', 'mpeg4', 'mp4', 'webm', 'wmv'];
 
 console.log("Media Database Manager javasrcript ....");
 
 var fnStartApp = function() {
 		fnBind();
-		fnLoadMediaFromLocalStorage();
 	};
 
 
-var fnLoadMediaFromLocalStorage = function() {
+function errorPrintFactory(custom) {
+    return function(e) {
+        var msg = '';
 
-	};
+        switch(e.code) {
+        case FileError.QUOTA_EXCEEDED_ERR:
+            msg = 'QUOTA_EXCEEDED_ERR';
+            break;
+        case FileError.NOT_FOUND_ERR:
+            msg = 'NOT_FOUND_ERR';
+            break;
+        case FileError.SECURITY_ERR:
+            msg = 'SECURITY_ERR';
+            break;
+        case FileError.INVALID_MODIFICATION_ERR:
+            msg = 'INVALID_MODIFICATION_ERR';
+            break;
+        case FileError.INVALID_STATE_ERR:
+            msg = 'INVALID_STATE_ERR';
+            break;
+        default:
+            msg = 'Unknown Error';
+            break;
+        }
+
+        console.log(custom + ': ' + msg);
+    };
+}
+
+function getFileType(filename) {
+    var ext = filename.substr(filename.lastIndexOf('.') + 1).toLowerCase();
+    if(imgFormats.indexOf(ext) >= 0) return "image";
+    else if(audFormats.indexOf(ext) >= 0) return "audio";
+    else if(vidFormats.indexOf(ext) >= 0) return "video";
+    else return null;
+}
+
+function getGalleriesInfo(results) {
+    // clearContentDiv();
+    if(results.length) {
+        var str = 'Media files count: ' + results.length + ' ( ';
+        results.forEach(function(item, indx, arr) {
+            // the gallery name is a JSON string containing and id and a name
+            var gallery = JSON.parse(item.name);
+            str += gallery.name;
+            if(indx < arr.length - 1) str += ",";
+            str += " ";
+        });
+        str += ')';
+        // document.getElementById("filename").innerText = str;
+        console.log(str);
+        // chrome.storage.set(results); // store the list of media directories
+        // gGalleryIndex = 0;
+
+        // document.getElementById("scan-button").disabled = "";
+    } else {
+        // document.getElementById("filename").innerText = 'No galleries found';
+        // document.getElementById("scan-button").disabled = "disabled";
+    }
+}
+
+function scanGallery(entries) {
+   // when the size of the entries array is 0, we've processed all the directory contents
+   if (entries.length === 0) {
+      if (gDirectories.length > 0) {
+         var dir_entry = gDirectories.shift();
+         console.log('Doing subdir: ' + dir_entry.fullPath);
+         gGalleryReader = dir_entry.createReader();
+         gGalleryReader.readEntries(scanGallery, errorPrintFactory('readEntries'));
+      }
+      else {
+         gGalleryIndex++;
+         if (gGalleryIndex < gGalleryArray.length) {
+            console.log('Doing next Gallery: ' + gGalleryArray[gGalleryIndex].name);
+            scanGalleries(gGalleryArray[gGalleryIndex]);
+         }
+      }
+      return;
+   }
+   for (var i = 0; i < entries.length; i++) {
+      console.log(entries[i].name);
+
+      if (entries[i].isFile) {
+         addItem(entries[i]);
+         gGalleryData[gGalleryIndex].numFiles++;
+         (function(galData) {
+            entries[i].getMetadata(function(metadata){
+               galData.sizeBytes += metadata.size;
+            });
+         }(gGalleryData[gGalleryIndex]));
+      }
+      else if (entries[i].isDirectory) {
+         gDirectories.push(entries[i]);
+      }
+      else {
+         console.log("Got something other than a file or directory.");
+      }
+   }
+   // readEntries has to be called until it returns an empty array. According to the spec,
+   // the function might not return all of the directory's contents during a given call.
+   gGalleryReader.readEntries(scanGallery, errorPrintFactory('readMoreEntries'));
+}
+
+function scanGalleries(fs) {
+   console.log('Reading gallery: ' + fs.name);
+   var galInfo = JSON.parse(fs.name);
+   gCurOptGrp = addGallery(galInfo.name, galInfo.galleryId);
+   gGalleryData[gGalleryIndex] = new GalleryData(galInfo.galleryId);
+   gGalleryReader = fs.root.createReader();
+   gGalleryReader.readEntries(scanGallery, errorPrintFactory('readEntries'));
+}
 
 var fnBind = function() {
 		$("#testButton").click(function() {
@@ -18,6 +129,20 @@ var fnBind = function() {
 			self.fnFindMediaInfo("Gladiator");
 			console.log("test click ");
 		});
+        $("#scanFolders").click(function() {
+            $("#console").append("scanGalleries");
+            // clearContentDiv();
+            // clearList();
+            if (gGalleryArray.length > 0) {
+                scanGalleries(gGalleryArray[0]);
+            }
+        });
+        $("#selectFolders").click(function() {
+            $("#console").append("getMediaFileSystems");
+            chrome.mediaGalleries.getMediaFileSystems({
+                interactive: 'yes'
+            }, getGalleriesInfo);
+        });
 	};
 
 var fnAddMedia = function(media, media_id) {
@@ -28,7 +153,8 @@ var fnAddMedia = function(media, media_id) {
 var fnSaveMediaToLocalStorage = function(media_id, data) {
 		console.log("Saving media to LocalStorage...", media_id, data);
 		chrome.storage.sync[media_id]=data;
-	}
+	};
+
 var fnAddMediaToUI = function(media) {
 		console.log("Adding media to UI...", media);
 	};

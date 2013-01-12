@@ -12,5 +12,9 @@
       "scripts": ["main.js"]
     }
   },
-  "permissions": ["storage", "webview"]
+  "permissions": [
+    "storage",
+    {"mediaGalleries": ["read", "allAutoDetected"]},
+    "fileSystem", "webview"
+  ]
 }
