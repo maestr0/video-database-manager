@@ -1,4 +1,1 @@
-video-database-manager
-======================
-
-GDG Chrome Apps Hackathon
+# VIDEO DATABASE MANAGER
