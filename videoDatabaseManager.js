@@ -1,8 +1,8 @@
-console.log("video Database Manager javasrcript ....")
+console.log("Media Database Manager javasrcript ....")
 
 var fnStartApp = function(){
 	fnBind();
-	fnLoadMoviesFromLocalStorage();
+	fnLoadMediaFromLocalStorage();
 }
 
 
@@ -14,7 +14,20 @@ var fnBind = function(){
 
 }
 
-var fnFindMovieInfo = function(title){
+var fnAddMediaToUI = function(media){
+
+}
+
+var fnFindMediaInfo = function(title){
+
+	// get list of files
+
+	// foreach
+
+	callAPI();
+	// save
+	fnAddVideoToUI(media)
+
 	
 }
 
