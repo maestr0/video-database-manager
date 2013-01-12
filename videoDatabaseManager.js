@@ -14,7 +14,9 @@ var fnLoadMediaFromLocalStorage = function() {
 
 var fnBind = function() {
 		$("#testButton").click(function() {
-			fnFindMediaInfo("Gladiator");
+			$("#console").append("test click<br />");
+			self.fnFindMediaInfo("Gladiator");
+			console.log("test click ");
 		});
 	};
 
@@ -48,6 +50,6 @@ var fnCallAPI = function(url) {
 				// TODO: error handeling 
 			}
 		});
-	};
+	};	
 
 fnStartApp();
