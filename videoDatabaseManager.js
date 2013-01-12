@@ -190,8 +190,10 @@ var fnAddMedia = function(media, media_id) {
     };
 
 var fnLoadDataFromStorage = function() {
-	$.each(chrome.storage.sync,function(key,value){
-		self.fnAddMediaToUI(JSON.parse(value));
+	chrome.storage.sync.get(null, function(results) {
+		$.each(results,function(media_id,data){
+			self.fnAddMediaToUI(data);	
+		});
 	});
 };
 
