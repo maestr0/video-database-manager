@@ -26,7 +26,7 @@ var fnAddMedia = function(media, media_id) {
 	};
 
 var fnSaveMediaToLocalStorage = function(media_id, data) {
-		console.log("Saving media to LocalStorage...", media);
+		console.log("Saving media to LocalStorage...", media_id, data);
 	}
 var fnAddMediaToUI = function(media) {
 		console.log("Adding media to UI...", media);
