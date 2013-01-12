@@ -210,8 +210,8 @@ var fnAddMediaToUI = function(media) {
     };
 
 var fnFindMediaInfo = function(mediaFile) {      
-        var title = filenameToTitle(mediaFile.filename);
-        var year = filenameToYear(mediaFile.filename);
+        var title = filenameToTitle(mediaFile.file.name);
+        var year = filenameToYear(mediaFile.file.name);
 
         var url = 'http://www.imdbapi.com/?t=' + title + "&y=" + year;
         fnCallAPI(url);
