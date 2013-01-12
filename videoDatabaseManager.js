@@ -16,25 +16,27 @@ var fnBind = function(){
 
 }
 
+var fnAddMedia = function(media,media_id){
+	fnAddMediaToUI(media);
+	fnSaveMediaToLocalStorage(media,media_id);
+}
+
 var fnAddMediaToUI = function(media){
 
 }
 
 var fnFindMediaInfo = function(title){
-	// get list of files
 	var url = 'http://www.imdbapi.com/?t='+title;
-	// foreach
-
 	fnCallAPI(url);
-	// save
-	fnAddVideoToUI(media)
-
-	
 }
 
-var fnAddVideoToUI = function(url){
+var fnCallAPI = function(url){
 	$.getJSON(url, function(data){
-		
+		if (data["Response"]!="Parse Error"){
+			fnAddMedia(data);						
+		} else {
+			// TODO: error handeling 
+		}
     });
 }
 
