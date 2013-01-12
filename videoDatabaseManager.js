@@ -82,18 +82,6 @@ function getGalleriesInfo(results) {
     }
 }
 
-function addItem(itemEntry) {
-   var opt = document.createElement("option");
-   if (itemEntry.isFile) {
-      opt.setAttribute("data-fullpath", itemEntry.fullPath);
-
-      var galInfo = JSON.parse(itemEntry.filesystem.name);
-      opt.setAttribute("data-fsid", galInfo.galleryId);
-   }
-   opt.appendChild(document.createTextNode(itemEntry.name));
-   gCurOptGrp.appendChild(opt);
-}
-
 function scanGallery(entries) {
     // when the size of the entries array is 0, we've processed all the directory contents
     if(entries.length === 0) {
@@ -112,10 +100,11 @@ function scanGallery(entries) {
         return;
     }
     for(var i = 0; i < entries.length; i++) {
-        console.log(entries[i].name);
+        // console.log(entries[i].name);
 
         if(entries[i].isFile) {
-            addItem(entries[i]);
+            // TODO: get filesize
+            fnFindMediaInfo({filename: entries[i]});
             gGalleryData[gGalleryIndex].numFiles++;
             (function(galData) {
                 entries[i].getMetadata(function(metadata) {
@@ -197,9 +186,9 @@ var fnLoadDataFromStorage = function() {
 
 var fnSaveMediaToLocalStorage = function(media_id, data) {
 		console.log("Saving media to LocalStorage...", media_id, data);
-		chrome.storage.sync.set({ media_id : data },function() {
+		chrome.storage.sync.set({ media_id : data }, function() {
 			// Notify that we saved.
-			message('Media metadata saved');
+			console.log('Media metadata saved');
 		});
 	};
 
