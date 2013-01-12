@@ -8,6 +8,7 @@ console.log("Media Database Manager javasrcript ....");
 
 var fnStartApp = function() {
 		fnBind();
+		fnLoadDataFromStorage();
 	};
 
 
@@ -150,9 +151,18 @@ var fnAddMedia = function(media, media_id) {
 		fnSaveMediaToLocalStorage(media, media_id);
 	};
 
+var fnLoadDataFromStorage = function() {
+	$.each(chrome.storage.sync,function(key,value){
+		self.fnAddMediaToUI(JSON.parse(value));
+	});
+};
+
 var fnSaveMediaToLocalStorage = function(media_id, data) {
 		console.log("Saving media to LocalStorage...", media_id, data);
-		chrome.storage.sync[media_id]=data;
+		chrome.storage.sync.set({ media_id : data },function() {
+			// Notify that we saved.
+			message('Media metadata saved');
+		});
 	};
 
 var fnAddMediaToUI = function(media) {
