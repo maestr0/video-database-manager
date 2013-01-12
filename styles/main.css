@@ -11,3 +11,13 @@ h1 {
   color: rgb(66,66,66);
   letter-spacing: -0.05em;
 }
+
+#list {
+	height: 75%;
+	width: 25%;
+	border: 1px solid #aaa;
+	border-radius: 5px;
+	display: inline-block;
+	vertical-align: top;
+	background-color: #777;
+}
