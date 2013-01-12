@@ -13,7 +13,9 @@ var fnLoadMoviesFromLocalStorage = function() {
 	};
 
 var fnBind = function() {
-
+		$("#testButton").click(function() {
+			fnFindMediaInfo("Gladiator");
+		});
 	};
 
 var fnAddMedia = function(media, media_id) {
@@ -21,8 +23,11 @@ var fnAddMedia = function(media, media_id) {
 		fnSaveMediaToLocalStorage(media, media_id);
 	};
 
+var fnSaveMediaToLocalStorage = function(media_id, data) {
+		console.log("Saving media to LocalStorage...", media);
+	}
 var fnAddMediaToUI = function(media) {
-
+		console.log("Adding media to UI...", media);
 	};
 
 var fnFindMediaInfo = function(mediaFile) {
@@ -39,6 +44,7 @@ var fnCallAPI = function(url) {
 			if(data.Response != "Parse Error") {
 				fnAddMedia(data);
 			} else {
+				console.log("Something went wrong ;(. IMDB API error", data);
 				// TODO: error handeling 
 			}
 		});
