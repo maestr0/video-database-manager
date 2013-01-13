@@ -13,27 +13,29 @@
 <body>
     <!-- logo goes here -->
     <h1>Video Database Manager</h1>
-    <form id="search">
-        <div class="input-append">
-          <input type="text">
-          <div class="btn-group">
-            <button class="btn" tabindex="-1">Search</button>
-            <button class="btn dropdown-toggle" data-toggle="dropdown" tabindex="-1">
-              <span class="caret">&nbsp;</span>
-            </button>
-            <ul class="dropdown-menu">
-              <li><a href="#" class="vt-p">Movies</a></li>
-              <li><a href="#" class="vt-p">TV Shows</a></li>
-              <li class="divider">&nbsp;</li>
-              <li><a href="#" class="vt-p">Anything</a></li>
-            </ul>
-          </div>
-        </div>
-    </form>
+    <div class="">
+        <form id="search">
+            <div class="input-append">
+              <input type="text">
+              <div class="btn-group">
+                <button class="btn" tabindex="-1">Search</button>
+                <button class="btn dropdown-toggle" data-toggle="dropdown" tabindex="-1">
+                  <span class="caret">&nbsp;</span>
+                </button>
+                <ul class="dropdown-menu">
+                  <li><a href="#" class="vt-p">Movies</a></li>
+                  <li><a href="#" class="vt-p">TV Shows</a></li>
+                  <li class="divider">&nbsp;</li>
+                  <li><a href="#" class="vt-p">Anything</a></li>
+                </ul>
+              </div>
+            </div>
+        </form>
 
-    <button class="btn" id="testButton">Load Metadata from LocalStorage</button>
-    <button class="btn" id="selectFolders">Select Media Folders</button>
-    <button class="btn" id="scanFolders">Scan</button>
+        <button class="btn" id="searchDescriptions">Search Descriptions</button>
+        <button class="btn" id="selectFolders">Select Media Folders</button>
+        <button class="btn" id="scanFolders">Scan</button>
+    </div>
     
     <div class="container scroller">
         <div class="row-fluid" id="searchcontainer">

@@ -167,15 +167,23 @@ function scanGalleries(fs) {
 }
 
 var fnBind = function() {
-        var container = $("#container");
-        var searchcontainer = $("#searchcontainer");
-        searchcontainer.hide();
+        var $container = $("#container");
+        var $searchDescriptions = $("#searchDescriptions");
+        var $searchcontainer = $("#searchcontainer");
+        $searchcontainer.hide();
 
-        $("#testButton").click(function() {            
+        $searchDescriptions.click(function() {
             $("#console").append("Loading metadata from localStorage<br />");
-            fnLoadDataFromStorage();            
+            fnLoadDataFromStorage();
         });
 
+        // if there are nothing to search Disable the searchDescriptions Button
+        chrome.storage.local.getBytesInUse(null, function(bytes){
+            if (bytes === 0) {
+                $searchDescriptions.addClass("disabled");
+            }
+        });
+        
 
         $("#scanFolders").click(function() {
             $("#console").append("scanGalleries");
@@ -191,11 +199,8 @@ var fnBind = function() {
                     getGalleriesInfo(results);
                     scanGalleries(gGalleryArray[0]);
                 });
-
-                // if(gGalleryArray.length > 0) {
-                    
-                // }
             }
+            $searchDescriptions.removeClass("disabled");
         });
         $("#selectFolders").click(function() {
             $("#console").append("getMediaFileSystems");
@@ -207,12 +212,12 @@ var fnBind = function() {
             // search in chrome.storage
             e.preventDefault();
             if ( $("#search :input").val() !== "" ) {
-                container.hide();
-                searchcontainer.show();
+                $container.hide();
+                $searchcontainer.show();
             }
             else {
-                container.show();
-                searchcontainer.hide();
+                $container.show();
+                $searchcontainer.hide();
             }
         });
     };
@@ -226,11 +231,14 @@ var fnLoadDataFromStorage = function() {
 	chrome.storage.local.get(null, function(results) {
 		$.each(results,function(media_id,data){
 			$("#console").append("Loaded " + media_id + "<br />");
-			try{
-				self.fnAddMediaToUI(JSON.parse(data));	
-			}catch(e){
-			//	console.error("Unable to parse video metadata",e);
-			}
+            var data = JSON.parse(data);
+            if (data.Response) {
+                try{
+                    self.fnAddMediaToUI(data);
+                }catch(e){
+                //    console.error("Unable to parse video metadata",e);
+                }
+            }
 		});
 	});
 };
