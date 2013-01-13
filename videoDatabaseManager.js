@@ -167,6 +167,10 @@ function scanGalleries(fs) {
 }
 
 var fnBind = function() {
+        var container = $("#container");
+        var searchcontainer = $("#searchcontainer");
+        searchcontainer.hide();
+
         $("#testButton").click(function() {            
             $("#console").append("Loading metadata from localStorage<br />");
             fnLoadDataFromStorage();            
@@ -199,8 +203,17 @@ var fnBind = function() {
                 interactive: 'yes'
             }, getGalleriesInfo);
         });
-        $(".form-search").submit(function() {
+        $("#search").submit(function(e) {
             // search in chrome.storage
+            e.preventDefault();
+            if ( $("#search :input").val() !== "" ) {
+                container.hide();
+                searchcontainer.show();
+            }
+            else {
+                container.show();
+                searchcontainer.hide();
+            }
         });
     };
 
