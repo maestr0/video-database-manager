@@ -260,7 +260,43 @@ var fnAddMediaToUI = function(media) {
 		
 		// jQuery(function($){
 				
-				$('.circle').mosaic({
+			
+		    
+		    // });
+		
+		$("#container div.row:last-child").append(movie_view);
+
+		var popover_delay = { show: 100, hide: 500 };
+		$("#container #media_"+media_count).popover({'trigger':'click','title':media.Title,'content':'<div class="synopsis">'+media.Plot+'</div><div class="actors"><strong>Actors:</strong>'+media.Actors+'</div>','placement':'right','delay':popover_delay});		
+		//$("#console").append("<webview src='"+ cover_url + "'></webview>");
+
+		var xhr = new XMLHttpRequest();
+		xhr.open('GET', cover_url, true);
+		xhr.responseType = 'blob';
+		var imageLocation = "#container #media_"+media_count+ " div.poster";
+		xhr.onload = function(e) {
+		  var img = document.createElement('img');
+		  img.src = window.webkitURL.createObjectURL(this.response);
+		  // document.body.appendChild(img);
+		  $(imageLocation).append(img);
+		};
+
+		xhr.send();
+
+
+
+
+		media_count++;
+		console.log("Media count in now:"+media_count, media);
+
+
+
+
+
+
+
+
+			$('.circle').mosaic({
 					opacity		:	0.8			//Opacity for overlay (0-1)
 				});
 				
@@ -295,33 +331,6 @@ var fnAddMediaToUI = function(media) {
 					hover_x		:	'400px',	//Horizontal position on hover
 					hover_y		:	'300px'		//Vertical position on hover
 				});
-		    
-		    // });
-		
-		$("#container div.row:last-child").append(movie_view);
-
-		var popover_delay = { show: 100, hide: 500 };
-		$("#container #media_"+media_count).popover({'trigger':'click','title':media.Title,'content':'<div class="synopsis">'+media.Plot+'</div><div class="actors"><strong>Actors:</strong>'+media.Actors+'</div>','placement':'right','delay':popover_delay});		
-		//$("#console").append("<webview src='"+ cover_url + "'></webview>");
-
-		var xhr = new XMLHttpRequest();
-		xhr.open('GET', cover_url, true);
-		xhr.responseType = 'blob';
-		var imageLocation = "#container #media_"+media_count+ " div.poster";
-		xhr.onload = function(e) {
-		  var img = document.createElement('img');
-		  img.src = window.webkitURL.createObjectURL(this.response);
-		  // document.body.appendChild(img);
-		  $(imageLocation).append(img);
-		};
-
-		xhr.send();
-
-
-
-
-		media_count++;
-		console.log("Media count in now:"+media_count, media);
 	};
 
 var fnFindMediaInfo = function(mediaFile) {      
