@@ -281,7 +281,7 @@ var fnAddMediaToUI = function(media) {
 		$("#container div.row:last-child").append(movie_view);
 
 		var popover_delay = { show: 100, hide: 500 };
-        $("#container #media_"+media_count).popover({'trigger':'click','title':media.Title,'content':'<div class="synopsis"><h4>Synopsis</h4>'+media.Plot+'</div><div class="actors"><strong>Actors </strong><i>'+media.Actors+'</i></div>','html':'true','placement':'right','delay':popover_delay});
+		$("#container #media_"+media_count).popover({'trigger':'click','title':media.Title,'content':'<div class="synopsis">'+media.Plot+'</div><div class="actors"><strong>Actors:</strong>'+media.Actors+'</div>','placement':'right','delay':popover_delay});		
 		//$("#console").append("<webview src='"+ cover_url + "'></webview>");
 
 		var xhr = new XMLHttpRequest();
@@ -362,7 +362,7 @@ var fnCallAPI = function(url,media_id) {
             if(data.Response != "Parse Error") {
                 fnAddMedia(data,media_id);
             } else {
-                console.log("Something went wrong ;(. IMDB API error", data);
+                console.log("Something went wrong ;(. IMDB API error", media_id, url, data);
                 // TODO: error handeling 
             }
         });
@@ -374,7 +374,7 @@ var filenameToYear = function(filename) {
 };
 
 var filenameToTitle = function(filename) {
-    filename = filename.toLowerCase().replace(/(\[|\(|dvd|dvdrip|brrip|bdrip|tvrip|webrip|r5|avi|mpeg|hdtv|x264).*/i, '')
+    filename = filename.replace(/(\[|\(|dvd|brrip|bdrip|tvrip|r5|avi|mpeg).*/i, '')
             .replace(/\d{4}/i,'').replace(/[\.\s]/g, '+');
     return filename;
 };
