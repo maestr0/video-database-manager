@@ -214,16 +214,29 @@ var fnBind = function() {
         $("#search").submit(function(e) {
             // search in chrome.storage
             e.preventDefault();
-            if ( $("#search :input").val() !== "" ) {
-                $container.hide();
-                $searchcontainer.show();
+            var searchParameter = $("#search :input").val();
+            if ( searchParameter !== "" ) {
+                // $container.hide();
+                var results = fnSearch(searchParameter.toLowerCase());
+                // $searchcontainer.show();
             }
             else {
-                $container.show();
-                $searchcontainer.hide();
+                // $container.show();
+                // $searchcontainer.hide();
+                $("div[data-title]").show();
             }
         });
     };
+
+function fnSearch (parameter) {
+    var allStorage;
+    chrome.storage.local.get(null, function(res) {
+        allStorage = res;
+    });
+    // hide all the movies that do not match the title
+    $("div[data-title]").not("div[data-title*='"+ parameter +"']").hide();
+    //
+}
 
 var fnAddMedia = function(media, media_id) {
         fnAddMediaToUI(media);
@@ -270,7 +283,7 @@ var fnAddMediaToUI = function(media) {
 		
 		
 		var cover_url = media.Poster; //.replace('http://ia.media-imdb.com/images/M/','styles/img/covers/');
-		var movie_view = "<div class='span4'><div id='media_"+media_count+"' class='media mosaic-block bar3'><div class='poster mosaic-backdrop'></div><div class='mosaic-overlay'><div class='title_container'><h4 class='title'>"+media.Title+"<div class='runtime'>("+media.Runtime+")</div></h4></div><p class='mosaic_blurb' > "+media.Released+" <br> " +media.Genre+ " </p> "+media.imdbRating+"</div></div></div>";
+		var movie_view = "<div class='span4' data-title="+media.Title.toLowerCase()+"><div id='media_"+media_count+"' class='media mosaic-block bar3'><div class='poster mosaic-backdrop'></div><div class='mosaic-overlay'><div class='title_container'><h4 class='title'>"+media.Title+"<div class='runtime'>("+media.Runtime+")</div></h4></div><p class='mosaic_blurb' > "+media.Released+" <br> " +media.Genre+ " </p> "+media.imdbRating+"</div></div></div>";
 		
 		// jQuery(function($){
 				
@@ -378,10 +391,6 @@ var filenameToTitle = function(filename) {
             .replace(/\d{4}/i,'').replace(/[\.\s]/g, '+');
     return filename;
 };
-
-function fnSearch (parameter) {
-    // body...
-}
 
 
 fnStartApp();
