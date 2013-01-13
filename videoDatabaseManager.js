@@ -274,12 +274,12 @@ var fnSaveMediaToLocalStorage = function(data, media_id) {
 var fnAddMediaToUI = function(media) {
 		console.log("Adding media to UI...", media);
 		//media.title, media.year, media.tags,media.cover,media.rating
-		if (media_count%3 == 0) {
+		// if (media_count%3 == 0) {
 			// create new row and add
-			row = "<div class='row' ></div>";
-			$('#container').append(row);
-			console.log("Created new row...", media);
-		}
+			// row = "";
+			// $('#container').append(row);
+			// console.log("Created new row...", media);
+		// }
 		
 		
 		var cover_url = media.Poster; //.replace('http://ia.media-imdb.com/images/M/','styles/img/covers/');
