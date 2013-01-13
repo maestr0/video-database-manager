@@ -12,9 +12,8 @@
       "scripts": ["main.js"]
     }
   },
-  "permissions": [
-    "storage",
-    {"mediaGalleries": ["read", "allAutoDetected"]},
-    "fileSystem", "webview"
-  ]
+  "permissions": ["storage",
+  {
+    "mediaGalleries": ["read", "allAutoDetected"]
+  }, "fileSystem", "webview","http://ia.media-imdb.com/" ]
 }
