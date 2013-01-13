@@ -172,6 +172,9 @@ var fnBind = function() {
                 interactive: 'yes'
             }, getGalleriesInfo);
         });
+        $(".form-search").submit(function() {
+            // search in chrome.storage
+        });
     };
 
 var fnAddMedia = function(media, media_id) {
@@ -231,7 +234,9 @@ var filenameToTitle = function(filename) {
     return filename;
 };
 
-
+function fnSearch (parameter) {
+    // body...
+}
 
 
 fnStartApp();
