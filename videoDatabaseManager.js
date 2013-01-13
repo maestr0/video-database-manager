@@ -187,11 +187,11 @@ var fnLoadDataFromStorage = function() {
 	});
 };
 
-var fnSaveMediaToLocalStorage = function(media_id, data) {
+var fnSaveMediaToLocalStorage = function(data, media_id) {
 		console.log("Saving media to LocalStorage...", media_id, data);
 		chrome.storage.local.set({ media_id : data }, function() {
 			// Notify that we saved.
-			console.log('Media metadata saved');
+			console.log('Media metadata saved ', media_id, data);
 		});
 	};
 
