@@ -177,7 +177,7 @@ var fnBind = function() {
         // if there are nothing to search Disable the searchDescriptions Button
         chrome.storage.local.getBytesInUse(null, function(bytes){
             if (bytes === 0) {
-                $searchDescriptions.addClass("disabled");
+                $searchDescriptions.toggleClass("disabled");
             }
         });
 		$("#clearLocalStorage").click(function() {
@@ -203,7 +203,7 @@ var fnBind = function() {
                     scanGalleries(gGalleryArray[0]);
                 });
             }
-            $searchDescriptions.removeClass("disabled");
+            $searchDescriptions.toggleClass("disabled");
         });
         $("#selectFolders").click(function() {
             $("#console").append("getMediaFileSystems");
