@@ -281,7 +281,7 @@ var fnAddMediaToUI = function(media) {
 		
 		
 		var cover_url = media.Poster; //.replace('http://ia.media-imdb.com/images/M/','styles/img/covers/');
-		var movie_view = "<div class='span4' data-title="+escape(media.Title).toLowerCase()+"><div id='media_"+media_count+"' class='media mosaic-block bar3'><div class='poster mosaic-backdrop'></div><div class='mosaic-overlay'><div class='title_container'><h4 class='title'>"+media.Title+"<div class='runtime'>("+media.Runtime+")</div></h4></div><p class='mosaic_blurb' > "+media.Released+" <br> " +media.Genre+ " </p> "+media.imdbRating+"</div></div></div>";
+		var movie_view = "<div class='span4' data-title="+media.Title.toLowerCase()+"><div id='media_"+media_count+"' class='media mosaic-block bar3'><div class='poster mosaic-backdrop'></div><div class='mosaic-overlay'><div class='title_container'><h4 class='title'>"+media.Title+"<div class='runtime'>("+media.Runtime+")</div></h4></div><p class='mosaic_blurb' > "+media.Released+" <br> " +media.Genre+ " </p> "+media.imdbRating+"</div></div></div>";
 		
 		// jQuery(function($){
 				
@@ -301,7 +301,7 @@ var fnAddMediaToUI = function(media) {
         var popover_delay = { show: 100, hide: 500 };
         $("#container #media_"+media_count).popover({'trigger':'click','title':media.Title,'content':'<div class="synopsis"><h4>Synopsis</h4>'+media.Plot+'</div><div class="actors"><strong>Actors </strong><i>'+media.Actors+'</i></div>','html':'true','placement':'right','delay':popover_delay});
         //$("#console").append("<webview src='"+ cover_url + "'></webview>");
-            }
+            };
 		var xhr = new XMLHttpRequest();
 		xhr.open('GET', cover_url, true);
 		xhr.responseType = 'blob';

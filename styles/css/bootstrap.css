@@ -5386,7 +5386,7 @@ input[type="submit"].btn.btn-mini {
 }
 
 .popover.right .arrow {
-  top: 15%;
+  top: 50%;
   left: -11px;
   margin-top: -11px;
   border-right-color: #999;
