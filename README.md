@@ -1,9 +1,15 @@
 video-database-manager
 ======================
 
-Dublin GDG Chrome Apps Hackathon
+Built during [Dublin GDG Chrome Apps Hackathon](https://plus.google.com/u/0/events/cau9nmmq6alks0kr1cgr9873s1s)
+
 
 2013 January 12th and 13th
+
+TODO
+===
+* Open media files
+* Fix movies that are not found with the API
 
 
 Authors
