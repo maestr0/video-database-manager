@@ -13,6 +13,16 @@ h1 {
   letter-spacing: -0.05em;
 }
 
+#list {
+	height: 75%;
+	width: 25%;
+	border: 1px solid #aaa;
+	border-radius: 5px;
+	display: inline-block;
+	vertical-align: top;
+	background-color: #777;
+}
+
 #container {
 background: #b5bdc8; /* Old browsers */
 background: -moz-linear-gradient(top,  #b5bdc8 0%, #828c95 36%, #28343b 100%); /* FF3.6+ */

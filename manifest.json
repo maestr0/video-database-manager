@@ -11,5 +11,10 @@
     "background": {
       "scripts": ["main.js"]
     }
-  }
+  },
+  "permissions": [
+    "storage",
+    {"mediaGalleries": ["read", "allAutoDetected"]},
+    "fileSystem", "webview"
+  ]
 }
