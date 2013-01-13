@@ -232,12 +232,12 @@ var fnAddMedia = function(media, media_id) {
 
 var fnLoadDataFromStorage = function() {
 	chrome.storage.local.get(null, function(results) {
-		$.each(results,function(media_id,data){
+		$.each(results,function(media_id, data){
 			$("#console").append("Loaded " + media_id + "<br />");
-            var data = JSON.parse(data);
-            if (data.Response) {
+            var parseData = JSON.parse(data);
+            if (parseData.Response) {
                 try{
-                    self.fnAddMediaToUI(data);
+                    self.fnAddMediaToUI(parseData);
                 }catch(e){
                     console.log("Unable to parse video metadata",e);
                 }
