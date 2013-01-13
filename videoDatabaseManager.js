@@ -374,7 +374,7 @@ var filenameToYear = function(filename) {
 };
 
 var filenameToTitle = function(filename) {
-    filename = filename.replace(/(\[|\(|dvd|brrip|bdrip|tvrip|r5|avi|mpeg).*/i, '')
+    filename = filename.toLowerCase().replace(/(\[|\(|dvd|dvdrip|brrip|bdrip|tvrip|webrip|r5|avi|mpeg|hdtv|x264).*/i, '')
             .replace(/\d{4}/i,'').replace(/[\.\s]/g, '+');
     return filename;
 };
