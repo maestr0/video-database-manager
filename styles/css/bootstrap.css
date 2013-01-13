@@ -5299,7 +5299,7 @@ input[type="submit"].btn.btn-mini {
   padding: 1px;
   text-align: left;
   white-space: normal;
-  background-color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.9);
   border: 1px solid #ccc;
   border: 1px solid rgba(0, 0, 0, 0.2);
   -webkit-border-radius: 6px;
@@ -5332,18 +5332,22 @@ input[type="submit"].btn.btn-mini {
 .popover-title {
   padding: 8px 14px;
   margin: 0;
-  font-size: 14px;
+  font-size: 24px;
   font-weight: normal;
   line-height: 18px;
-  background-color: #f7f7f7;
+  background-color: rgba(12, 12, 12, 0.72);
   border-bottom: 1px solid #ebebeb;
   -webkit-border-radius: 5px 5px 0 0;
      -moz-border-radius: 5px 5px 0 0;
           border-radius: 5px 5px 0 0;
+  color: rgb(255, 255, 255);
 }
 
 .popover-content {
-  padding: 9px 14px;
+  padding-left: 12px;
+  padding-right: 12px;
+  text-align: justify;
+  margin-top: -5px;
 }
 
 .popover .arrow,
@@ -5382,7 +5386,7 @@ input[type="submit"].btn.btn-mini {
 }
 
 .popover.right .arrow {
-  top: 50%;
+  top: 15%;
   left: -11px;
   margin-top: -11px;
   border-right-color: #999;
