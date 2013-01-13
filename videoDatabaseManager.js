@@ -216,7 +216,7 @@ var fnLoadDataFromStorage = function() {
 			try{
 				self.fnAddMediaToUI(JSON.parse(data));	
 			}catch(e){
-				console.error("Unable to parse video metadata",e);
+			//	console.error("Unable to parse video metadata",e);
 			}
 		});
 	});
