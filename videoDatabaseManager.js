@@ -226,25 +226,25 @@ var fnBind = function() {
     };
 
 var fnAddMedia = function(media, media_id) {
-        fnAddMediaToUI(media);
-        fnSaveMediaToLocalStorage(media, media_id);
-    };
+			fnAddMediaToUI(media);
+			fnSaveMediaToLocalStorage(media, media_id);
+	};
 
 var fnLoadDataFromStorage = function() {
-	chrome.storage.local.get(null, function(results) {
-		$.each(results,function(media_id,data){
-			$("#console").append("Loaded " + media_id + "<br />");
-            var data = JSON.parse(data);
-            if (data.Response) {
-                try{
-                    self.fnAddMediaToUI(data);
-                }catch(e){
-                    console.log("Unable to parse video metadata",e);
-                }
-            }
+		chrome.storage.local.get(null, function(results) {
+			$.each(results, function(media_id, val) {
+				$("#console").append("Loaded " + media_id + "<br />");
+				try {
+					var data = JSON.parse(val);
+					if(data.Response === "True") {
+						self.fnAddMediaToUI(data);
+					}
+				} catch(e) {
+					console.log("Unable to parse video metadata", e);
+				}
+			});
 		});
-	});
-};
+	};
 
 var fnSaveMediaToLocalStorage = function(data, media_id) {
 		console.log("Saving media to LocalStorage...", media_id, data);
