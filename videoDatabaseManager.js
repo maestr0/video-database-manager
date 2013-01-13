@@ -180,7 +180,13 @@ var fnBind = function() {
                 $searchDescriptions.addClass("disabled");
             }
         });
-        
+		$("#clearLocalStorage").click(function() {
+			chrome.storage.local.get(null, function(results) {
+				$.each(results,function(key,val){
+					chrome.storage.local.remove(key);
+				})
+			});
+		});
 
         $("#scanFolders").click(function() {
             $("#console").append("scanGalleries");
