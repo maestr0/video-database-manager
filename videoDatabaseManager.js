@@ -242,7 +242,7 @@ var fnAddMediaToUI = function(media) {
 		
 		
 		var cover_url = media.Poster; //.replace('http://ia.media-imdb.com/images/M/','styles/img/covers/');
-		var movie_view = "<div id='media_"+media_count+"' class='span4 media mosaic-block bar'><div class='poster mosaic-backdrop'><webview src='"+ cover_url + "'></webview></div><div class='mosaic-overlay'><p class='title'>"+media.Title+"</p><p class='runtime'>"+media.Runtime+"</p><p>"+media.imdbRating+"</p><h3 class='year details'>"+media.Released+"</h3><p class='genre details'>"+media.Genre+"</p></div></div>";
+		var movie_view = "<div class='span4'><div id='media_"+media_count+"' class='media mosaic-block bar3'><div class='poster mosaic-backdrop'><webview src='"+ cover_url + "'></webview></div><div class='mosaic-overlay'><div class='title_container'><h4 class='title'>"+media.Title+"<div class='runtime'>("+media.Runtime+")</div></h4></div><p class='mosaic_blurb' > "+media.Released+" <br> " +media.Genre+ " </p> "+media.imdbRating+"</div></div></div>";
 		
 		jQuery(function($){
 				
