@@ -139,10 +139,9 @@ function scanGalleries(fs) {
 }
 
 var fnBind = function() {
-        $("#testButton").click(function() {
-            $("#console").append("test click<br />");
-            fnLoadDataFromStorage();
-            console.log("Loading metadata from localStorage");
+        $("#testButton").click(function() {            
+            $("#console").append("Loading metadata from localStorage<br />");
+            fnLoadDataFromStorage();            
         });
 
 
@@ -185,6 +184,7 @@ var fnAddMedia = function(media, media_id) {
 var fnLoadDataFromStorage = function() {
 	chrome.storage.local.get(null, function(results) {
 		$.each(results,function(media_id,data){
+			$("#console").append("Loaded " + media_id + "<br />");
 			self.fnAddMediaToUI(data);	
 		});
 	});
@@ -192,7 +192,11 @@ var fnLoadDataFromStorage = function() {
 
 var fnSaveMediaToLocalStorage = function(data, media_id) {
 		console.log("Saving media to LocalStorage...", media_id, data);
-		chrome.storage.local.set({ media_id : data }, function() {
+
+		var key = 'MEDIA-'+media_id;
+		var object = {};
+		object[key]=JSON.stringify(data);
+		chrome.storage.local.set(object, function() {
 			// Notify that we saved.
 			console.log('Media metadata saved ', media_id, data);
 		});
