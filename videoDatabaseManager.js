@@ -2,6 +2,7 @@ var gGalleryIndex = 0; // gallery currently being iterated
 var gDirectories = [];     // used to process subdirectories
 var gGalleryArray = []; // holds information about all top-level Galleries found
 var gGalleryData = []; // hold computed information about each Gallery
+var gMovieTitles = []; // hold all the movie titiles
 var self = this;
 media_count = 0;
 
@@ -190,8 +191,6 @@ var fnBind = function() {
 
         $("#scanFolders").click(function() {
             $("#console").append("scanGalleries");
-            // clearContentDiv();
-            // clearList();
             if(gGalleryArray.length > 0) {
                 scanGalleries(gGalleryArray[0]);
             }
@@ -211,18 +210,13 @@ var fnBind = function() {
                 interactive: 'yes'
             }, getGalleriesInfo);
         });
-        $("#search").submit(function(e) {
-            // search in chrome.storage
+        $("#searchinput").keyup(function(e) {
             e.preventDefault();
             var searchParameter = $("#search :input").val();
             if ( searchParameter !== "" ) {
-                // $container.hide();
-                var results = fnSearch(searchParameter.toLowerCase());
-                // $searchcontainer.show();
+                fnSearch(searchParameter.toLowerCase());
             }
             else {
-                // $container.show();
-                // $searchcontainer.hide();
                 $("div[data-title]").show();
             }
         });
@@ -233,6 +227,7 @@ function fnSearch (parameter) {
     chrome.storage.local.get(null, function(res) {
         allStorage = res;
     });
+    $("div[data-title]").show();
     // hide all the movies that do not match the title
     $("div[data-title]").not("div[data-title*='"+ parameter +"']").hide();
     //
@@ -255,8 +250,11 @@ var fnLoadDataFromStorage = function() {
                     console.log("Unable to parse video metadata",e);
                 }
             }
+            //gMovieTitles.push(data.title);
 		});
 	});
+    // set the Movie Titles for the search typeahead search field
+    // $('#searchinput').typeahead({source: gMovieTitles});
 };
 
 var fnSaveMediaToLocalStorage = function(data, media_id) {
@@ -283,7 +281,7 @@ var fnAddMediaToUI = function(media) {
 		
 		
 		var cover_url = media.Poster; //.replace('http://ia.media-imdb.com/images/M/','styles/img/covers/');
-		var movie_view = "<div class='span4' data-title="+media.Title.toLowerCase()+"><div id='media_"+media_count+"' class='media mosaic-block bar3'><div class='poster mosaic-backdrop'></div><div class='mosaic-overlay'><div class='title_container'><h4 class='title'>"+media.Title+"<div class='runtime'>("+media.Runtime+")</div></h4></div><p class='mosaic_blurb' > "+media.Released+" <br> " +media.Genre+ " </p> "+media.imdbRating+"</div></div></div>";
+		var movie_view = "<div class='span4' data-title="+escape(media.Title).toLowerCase()+"><div id='media_"+media_count+"' class='media mosaic-block bar3'><div class='poster mosaic-backdrop'></div><div class='mosaic-overlay'><div class='title_container'><h4 class='title'>"+media.Title+"<div class='runtime'>("+media.Runtime+")</div></h4></div><p class='mosaic_blurb' > "+media.Released+" <br> " +media.Genre+ " </p> "+media.imdbRating+"</div></div></div>";
 		
 		// jQuery(function($){
 				
