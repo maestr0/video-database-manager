@@ -11,35 +11,34 @@
     
 </head>
 <body>
-
+    <!-- logo goes here -->
     <h1>Video Database Manager</h1>
-    <button id="testButton">Load Metadata from LocalStorage</button>
-    <button id="selectFolders">Select Media Folders</button>
-    <button id="scanFolders">Scan</button>
-    <br/>
     <form id="search">
-    <div class="input-append">
-      <input type="text">
-      <div class="btn-group">
-        <button class="btn" tabindex="-1"><i class="icon-user icon-white"></i> Search</button>
-        <button class="btn dropdown-toggle" data-toggle="dropdown" tabindex="-1">
-          <span class="caret">&nbsp;</span>
-        </button>
-        <ul class="dropdown-menu">
-          <li><a href="#" class="vt-p">Movies</a></li>
-          <li><a href="#" class="vt-p">TV Shows</a></li>
-          <li class="divider">&nbsp;</li>
-          <li><a href="#" class="vt-p">Anything</a></li>
-        </ul>
-      </div>
-    </div>
+        <div class="input-append">
+          <input type="text">
+          <div class="btn-group">
+            <button class="btn" tabindex="-1">Search</button>
+            <button class="btn dropdown-toggle" data-toggle="dropdown" tabindex="-1">
+              <span class="caret">&nbsp;</span>
+            </button>
+            <ul class="dropdown-menu">
+              <li><a href="#" class="vt-p">Movies</a></li>
+              <li><a href="#" class="vt-p">TV Shows</a></li>
+              <li class="divider">&nbsp;</li>
+              <li><a href="#" class="vt-p">Anything</a></li>
+            </ul>
+          </div>
+        </div>
     </form>
 
-    <div id="searchcontainer">
-    </div>
+    <button class="btn" id="testButton">Load Metadata from LocalStorage</button>
+    <button class="btn" id="selectFolders">Select Media Folders</button>
+    <button class="btn" id="scanFolders">Scan</button>
     
-    <div class="container">
-        <div class="row-fluid" id="container">
+    <div class="container scroller" id="container">
+        <div class="row-fluid" id="searchcontainer">
+        </div>
+        <div class="row-fluid">
         </div>
         <div id="list">
         <select id="GalleryList" size="10" style="width:100%; height:100%">
@@ -47,11 +46,7 @@
         </div>
         <div id="content"></div>
     </div>
-    <div id="console"></div>
     
-    <div id="scroller">
-		<div id="container"></div>
-	</div>
     <script type="text/javascript" src="jquery-1.7.1.min.js"></script>
     <script type="text/javascript" src="styles/js/bootstrap.js"></script>
     <script type="text/javascript" src="videoDatabaseManager.js"></script>

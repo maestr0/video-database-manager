@@ -23,7 +23,7 @@ h1 {
 	background-color: #777;
 }
 
-#scroller, html {
+.scroller, html {
 	overflow-y: auto;
 }
 
