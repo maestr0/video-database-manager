@@ -13,9 +13,27 @@
 <body>
 
     <h1>Video Database Manager</h1>
-    <button id="testButton">TEST</button>
+    <button id="testButton">Load Metadata from LocalStorage</button>
     <button id="selectFolders">Select Media Folders</button>
     <button id="scanFolders">Scan</button>
+    <br/>
+    <form class="form-search">
+    <div class="input-append">
+      <input type="text">
+      <div class="btn-group">
+        <button class="btn" tabindex="-1">Search</button>
+        <button class="btn dropdown-toggle" data-toggle="dropdown" tabindex="-1">
+          <span class="caret">&nbsp;</span>
+        </button>
+        <ul class="dropdown-menu">
+          <li><a href="#" class="vt-p">Movies</a></li>
+          <li><a href="#" class="vt-p">TV Shows</a></li>
+          <li class="divider">&nbsp;</li>
+          <li><a href="#" class="vt-p">Anything</a></li>
+        </ul>
+      </div>
+    </div>
+    </form>
     
     <div id="container">
         <div id="list">

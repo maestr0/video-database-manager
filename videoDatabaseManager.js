@@ -131,7 +131,7 @@ function scanGallery(entries) {
 
         if(entries[i].isFile) {
             // TODO: get filesize
-            fnFindMediaInfo({filename: entries[i]});
+            fnFindMediaInfo({file: entries[i]});
             gGalleryData[gGalleryIndex].numFiles++;
             (function(galData) {
                 entries[i].getMetadata(function(metadata) {
@@ -167,11 +167,12 @@ function scanGalleries(fs) {
 }
 
 var fnBind = function() {
-        $("#testButton").click(function() {
-            $("#console").append("test click<br />");
-            self.fnFindMediaInfo("Gladiator");
-            console.log("test click ");
+        $("#testButton").click(function() {            
+            $("#console").append("Loading metadata from localStorage<br />");
+            fnLoadDataFromStorage();            
         });
+
+
         $("#scanFolders").click(function() {
             $("#console").append("scanGalleries");
             // clearContentDiv();
@@ -198,6 +199,9 @@ var fnBind = function() {
                 interactive: 'yes'
             }, getGalleriesInfo);
         });
+        $(".form-search").submit(function() {
+            // search in chrome.storage
+        });
     };
 
 var fnAddMedia = function(media, media_id) {
@@ -206,18 +210,23 @@ var fnAddMedia = function(media, media_id) {
     };
 
 var fnLoadDataFromStorage = function() {
-	chrome.storage.sync.get(null, function(results) {
+	chrome.storage.local.get(null, function(results) {
 		$.each(results,function(media_id,data){
+			$("#console").append("Loaded " + media_id + "<br />");
 			self.fnAddMediaToUI(data);	
 		});
 	});
 };
 
-var fnSaveMediaToLocalStorage = function(media_id, data) {
+var fnSaveMediaToLocalStorage = function(data, media_id) {
 		console.log("Saving media to LocalStorage...", media_id, data);
-		chrome.storage.sync.set({ media_id : data }, function() {
+
+		var key = 'MEDIA-'+media_id;
+		var object = {};
+		object[key]=JSON.stringify(data);
+		chrome.storage.local.set(object, function() {
 			// Notify that we saved.
-			console.log('Media metadata saved');
+			console.log('Media metadata saved ', media_id, data);
 		});
 	};
 
@@ -286,14 +295,16 @@ var fnFindMediaInfo = function(mediaFile) {
         var title = filenameToTitle(mediaFile.file.name);
         var year = filenameToYear(mediaFile.file.name);
 
+        console.log("TITLE=" + title);
+
         var url = 'http://www.imdbapi.com/?t=' + title + "&y=" + year;
-        fnCallAPI(url);
+        fnCallAPI(url,mediaFile.file.fullPath);
     };
 
-var fnCallAPI = function(url) {
+var fnCallAPI = function(url,media_id) {
         $.getJSON(url, function(data) {
             if(data.Response != "Parse Error") {
-                fnAddMedia(data);
+                fnAddMedia(data,media_id);
             } else {
                 console.log("Something went wrong ;(. IMDB API error", data);
                 // TODO: error handeling 
@@ -307,12 +318,14 @@ var filenameToYear = function(filename) {
 };
 
 var filenameToTitle = function(filename) {
-    filename = filename.replace(/(\[|\(|dvd|brrip|bdrip|tvrip|r5).*/i, '')
+    filename = filename.replace(/(\[|\(|dvd|brrip|bdrip|tvrip|r5|avi|mpeg).*/i, '')
             .replace(/\d{4}/i,'').replace(/[\.\s]/g, '+');
     return filename;
 };
 
-
+function fnSearch (parameter) {
+    // body...
+}
 
 
 fnStartApp();
