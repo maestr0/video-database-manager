@@ -239,18 +239,18 @@ function fnSearch (parameter) {
 }
 
 var fnAddMedia = function(media, media_id) {
-        fnAddMediaToUI(media);
-        fnSaveMediaToLocalStorage(media, media_id);
-    };
+			fnAddMediaToUI(media);
+			fnSaveMediaToLocalStorage(media, media_id);
+	};
 
 var fnLoadDataFromStorage = function() {
 	chrome.storage.local.get(null, function(results) {
 		$.each(results,function(media_id, data){
 			$("#console").append("Loaded " + media_id + "<br />");
-            var parseData = JSON.parse(data);
-            if (parseData.Response) {
+            var parsedData = JSON.parse(data);
+            if (parsedData.Response) {
                 try{
-                    self.fnAddMediaToUI(parseData);
+                    self.fnAddMediaToUI(parsedData);
                 }catch(e){
                     console.log("Unable to parse video metadata",e);
                 }
@@ -292,11 +292,18 @@ var fnAddMediaToUI = function(media) {
 		    // });
 		
 		$("#container div.row:last-child").append(movie_view);
-
-		var popover_delay = { show: 100, hide: 500 };
+        if (media_count%3>1)
+            {
+            var popover_delay = { show: 100, hide: 500 };
+            $("#container #media_"+media_count).popover({'trigger':'click','title':media.Title,'content':'<div class="synopsis"><h4>Synopsis</h4>'+media.Plot+'</div><div class="actors"><strong>Actors </strong><i>'+media.Actors+'</i></div>','html':'true','placement':'left','delay':popover_delay});
+        //$("#console").append("<webview src='"+ cover_url + "'></webview>");
+            }
+        else
+            {
+        var popover_delay = { show: 100, hide: 500 };
         $("#container #media_"+media_count).popover({'trigger':'click','title':media.Title,'content':'<div class="synopsis"><h4>Synopsis</h4>'+media.Plot+'</div><div class="actors"><strong>Actors </strong><i>'+media.Actors+'</i></div>','html':'true','placement':'right','delay':popover_delay});
-		//$("#console").append("<webview src='"+ cover_url + "'></webview>");
-
+        //$("#console").append("<webview src='"+ cover_url + "'></webview>");
+            }
 		var xhr = new XMLHttpRequest();
 		xhr.open('GET', cover_url, true);
 		xhr.responseType = 'blob';
@@ -375,7 +382,7 @@ var fnCallAPI = function(url,media_id) {
             if(data.Response != "Parse Error") {
                 fnAddMedia(data,media_id);
             } else {
-                console.log("Something went wrong ;(. IMDB API error", data);
+                console.log("Something went wrong ;(. IMDB API error", media_id, url, data);
                 // TODO: error handeling 
             }
         });
@@ -387,7 +394,7 @@ var filenameToYear = function(filename) {
 };
 
 var filenameToTitle = function(filename) {
-    filename = filename.toLowerCase().replace(/(\[|\(|dvd|dvdrip|brrip|bdrip|tvrip|webrip|r5|avi|mpeg|hdtv|x264).*/i, '')
+    filename = filename.replace(/(\[|\(|dvd|brrip|bdrip|tvrip|r5|avi|mpeg).*/i, '')
             .replace(/\d{4}/i,'').replace(/[\.\s]/g, '+');
     return filename;
 };
