@@ -227,10 +227,13 @@ function fnSearch (parameter) {
     chrome.storage.local.get(null, function(res) {
         allStorage = res;
     });
-    $("div[data-title]").show();
+    var $divMovieTitles = $("div[data-title]");
     // hide all the movies that do not match the title
-    $("div[data-title]").not("div[data-title*='"+ parameter +"']").hide();
-    //
+    $divMovieTitles.show().not("div[data-title*='"+ parameter +"']").hide();
+    
+    // instead of showing all divs and hidding the non-matches, it might be faster to do the opposite
+    // specially if there're a large number of non-matches
+    // $divMovieTitles.hide().filter("div[data-title*='"+ parameter +"']").show();
 }
 
 var fnAddMedia = function(media, media_id) {
